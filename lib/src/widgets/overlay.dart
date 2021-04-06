@@ -65,6 +65,7 @@ class DescribedFeatureOverlay extends StatefulWidget {
 
   final Widget child;
   final ContentLocation contentLocation;
+  final bool forceCentered;
   final bool enablePulsingAnimation;
 
   /// Called just before the overlay is displayed.
@@ -151,6 +152,7 @@ class DescribedFeatureOverlay extends StatefulWidget {
     this.onComplete,
     this.onDismiss,
     this.contentLocation = ContentLocation.trivial,
+    this.forceCentered = false,
     this.enablePulsingAnimation = true,
     this.allowShowingDuplicate = false,
     this.overflowMode = OverflowMode.ignore,
@@ -453,7 +455,8 @@ class _DescribedFeatureOverlayState extends State<DescribedFeatureOverlay>
 
   Offset? _backgroundPosition(Offset anchor, ContentLocation contentLocation) {
     final width = min(_screenSize.width, _screenSize.height);
-    final isBackgroundCentered = _isCloseToTopOrBottom(anchor);
+    final isBackgroundCentered =
+        widget.forceCentered || _isCloseToTopOrBottom(anchor);
 
     if (isBackgroundCentered) {
       return anchor;
